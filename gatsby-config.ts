@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
@@ -39,6 +43,13 @@ const config: GatsbyConfig = {
     },
     {
       resolve: "@sentry/gatsby",
+    },
+    {
+      resolve: "gatsby-source-sanity",
+      options: {
+        projectId: process.env.SANITY_PROJECT_ID,
+        dataset: "production",
+      },
     },
   ],
 };
