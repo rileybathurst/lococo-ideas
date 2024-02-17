@@ -10,15 +10,18 @@
   "scripts": {
     "develop": "gatsby develop",
     "start": "gatsby develop",
-    "build": "gatsby build",
+    "build": "gatsby build && npm run sentry:sourcemaps",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org riley-bathurst-design --project lococo-ideas ./public && sentry-cli sourcemaps upload --org riley-bathurst-design --project lococo-ideas ./public"
   },
   "dependencies": {
     "@mdx-js/react": "^3.0.0",
+    "@sentry/cli": "^2.28.6",
+    "@sentry/gatsby": "^7.101.1",
     "gatsby": "^5.13.2",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-manifest": "^5.13.1",

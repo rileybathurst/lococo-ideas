@@ -1,4 +1,8 @@
 node_modules/
 .cache/
 public
+.env*
 src/gatsby-types.d.ts
+
+# Sentry Config File
+.sentryclirc

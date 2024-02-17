@@ -37,6 +37,9 @@ const config: GatsbyConfig = {
       },
       __key: "pages",
     },
+    {
+      resolve: "@sentry/gatsby",
+    },
   ],
 };
 
