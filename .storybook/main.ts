@@ -11,9 +11,8 @@ const config: StorybookConfig = {
   framework: {
     name: "@storybook/react-webpack5",
     options: {
-      builder: {
-        useSWC: true,
-      },
+      fsCache: true,
+      lazyCompilation: true,
     },
   },
   docs: {
