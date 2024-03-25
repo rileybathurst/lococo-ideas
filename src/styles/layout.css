@@ -1,0 +1,38 @@
+/*------------------------------------*/
+/* #LAYOUT */
+/*------------------------------------*/
+
+.swan {
+  width: var(--swan);
+  margin-inline: auto;
+  padding-inline: var(--line-height);
+}
+
+.condor {
+  width: var(--condor);
+  margin-inline: auto;
+  padding-inline: var(--line-height);
+}
+
+.pelican {
+  width: var(--pelican);
+  margin-inline: auto;
+  padding-inline: var(--line-height);
+}
+
+/*------------------------------------*/
+
+.pelican-fold {
+  width: var(--pelican);
+  margin-inline: auto;
+  padding-inline: var(--line-height);
+  gap: var(--line-height);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  > * {
+    flex: 1 1 var(--vulture);
+    flex: 1 1 calc(var(--vulture) - var(--line-height) * 2);
+  }
+}

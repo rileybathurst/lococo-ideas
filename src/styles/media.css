@@ -1,0 +1,16 @@
+/*------------------------------------*/
+/* #MEDIA */
+/*------------------------------------*/
+
+/*------------------------------------*/
+
+.slider {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  gap: var(--line-height);
+
+  > * {
+    flex: 1 1 var(--swan);
+  }
+}
