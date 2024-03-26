@@ -1,0 +1,23 @@
+/*------------------------------------*/
+/* #LINKS */
+/*------------------------------------*/
+
+a {
+  color: var(--pine);
+  text-decoration: none;
+}
+
+a:hover,
+a.active {
+  text-decoration: underline;
+}
+
+/*------------------------------------*/
+
+.logo-link {
+  transition: var(--timing);
+}
+
+.logo-link:hover {
+  opacity: 0.5;
+}

@@ -2,12 +2,10 @@ import * as React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 
-import ReactMarkdown from "react-markdown";
-import remarkGfm from 'remark-gfm'
-
 import { PortableText } from '@portabletext/react'
 
 import Header from "../components/header"
+import Footer from "../components/footer"
 import Slider from "../components/slider";
 
 const IndexPage = () => {
@@ -47,9 +45,20 @@ const IndexPage = () => {
           title
           skills
           _rawNotes
+          slug {
+            current
+          }
 
           project {
             title
+            slug {
+              current
+            }
+            image {
+                asset {
+                    gatsbyImageData
+                }
+            }
           }
         }
       }
@@ -58,6 +67,15 @@ const IndexPage = () => {
         nodes {
           title
           _rawDescription
+        }
+      }
+
+      sanityTexture(title: {eq: "wood"}) {
+        title
+        image {
+          asset {
+            gatsbyImageData
+          }
         }
       }
 
@@ -70,7 +88,6 @@ const IndexPage = () => {
       <section className="pelican-fold three-lines">
 
         <div className="column">
-          {/* this is wrong use the portable text */}
           <PortableText
             value={data.sanityAuthor._rawBio}
           />
@@ -89,10 +106,15 @@ const IndexPage = () => {
           {data.sanityAuthor.title}
         </div>
 
-        <GatsbyImage
-          image={data.sanityAuthor.image.asset.gatsbyImageData}
-          alt={data.sanityAuthor.name}
-        />
+        <div className="author-block">
+          <div className="pine-block">{/* stay gold */}</div>
+          <div className="gold-block">{/* stay gold */}</div>
+          <GatsbyImage
+            image={data.sanityAuthor.image.asset.gatsbyImageData}
+            alt={data.sanityAuthor.name}
+            className="author"
+          />
+        </div>
 
       </section>
 
@@ -113,9 +135,16 @@ const IndexPage = () => {
           </div>
         </section>
 
-        {data.allSanityService.nodes.map((service: any, i: number) => (
+        {data.allSanityService.nodes.reverse().map((service: any, i: number) => (
           <div key={i}>
-            <h3 className="text-center">{service.title}</h3>
+            <div className='color-block'>
+              <GatsbyImage
+                image={data.sanityTexture?.image?.asset?.gatsbyImageData}
+                alt={data.sanityTexture.title}
+              />
+              <div className='pine-block'>{/* stay gold */}</div>
+              <h3 className="text-center">{service.title}</h3>
+            </div>
             <div className="pelican-fold">
               <ul>
                 {service.skills.map((skill: any, i: number) => (
@@ -131,25 +160,34 @@ const IndexPage = () => {
               </div>
             </div>
 
+            <hr />
+
             <h2 className="pelican">Projects</h2>
             <section className="pelican-fold">
-              {/* // TODO: this isnt an array yet */}
-              {/* <ul>
+              <div className="stack">
                 {service.project.map((project: any) => (
-                  <li key={project.title}>
+                  <Link to={`/${service.slug.current}/${project.slug.current}`} key={project.title} className="poster">
+                    <GatsbyImage
+                      image={project.image?.asset?.gatsbyImageData}
+                      alt={project.title}
+                    />
                     <h3>{project.title}</h3>
-                  </li>
+                  </Link>
                 ))}
-              </ul> */}
-
-              {service.project?.title}
+              </div>
             </section >
           </div>
         ))}
 
-        <div className="pelican">
-          <hr />
+        <div className='color-block'>
+          <GatsbyImage
+            image={data.sanityTexture?.image?.asset?.gatsbyImageData}
+            alt={data.sanityTexture.title}
+          />
+          <div className='pine-block'>{/* stay gold */}</div>
           <h3>Testimonials</h3>
+        </div>
+        <div className="pelican">
           {data.allSanityTestimonial.nodes.map((testimonial: any, i: number) => (
             <div key={i}>
               <h3>{testimonial.title}</h3>
@@ -164,6 +202,7 @@ const IndexPage = () => {
 
 
       </main >
+      <Footer />
     </>
   )
 }

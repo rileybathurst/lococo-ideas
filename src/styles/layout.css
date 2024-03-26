@@ -55,3 +55,50 @@
 header {
   margin-block-end: calc(var(--line-height) * 3);
 }
+
+.big-boy {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.nav-footer {
+  display: flex;
+  flex-flow: column;
+}
+
+/*------------------------------------*/
+
+.stack {
+  display: flex;
+
+  .poster {
+    flex: 1 1 var(--swan);
+
+    border-radius: var(--border-radius);
+    display: grid;
+
+    > * {
+      grid-row: 1;
+      grid-column: 1;
+    }
+
+    .gatsby-image-wrapper {
+      z-index: var(--floor);
+      margin-block-end: var(--line-height);
+      border: 1px solid grey;
+      background-color: var(--pine);
+    }
+
+    h3 {
+      background-color: white;
+      z-index: var(--canopy);
+      max-width: min-content;
+      align-self: end;
+      justify-self: center;
+      border: 1px solid grey;
+      padding: calc(var(--line-height) / 2);
+      border-radius: var(--border-radius);
+    }
+  }
+}

@@ -4,29 +4,60 @@ import Logo from "../images/logo"
 
 const Header = () => {
 
-  const { sanityAbout } = useStaticQuery(graphql`
+  const data = useStaticQuery(graphql`
     query HeaderQuery {
       sanityAbout {
         title
+      }
+
+      allSanityService {
+        nodes {
+          slug {
+            current
+          }
+        }
       }
     }
   `)
 
   return (
-    <header >
+    <header>
       <div className="swan">
-        <Link to='/'>
+        <Link to="/" className="logo-link">
           <Logo />
-          <h1 className="sr-only">{sanityAbout.title}</h1>
+          <h1 className="sr-only">{data.sanityAbout.title}</h1>
         </Link>
       </div>
       <div className="condor">
         <hr />
-        <h2 className="pine text-center">
-          <Link to="/architecture">ARCHITECTURE</Link>
-          &nbsp;&amp;&nbsp;
-          <Link to="/exhibits">EXHIBITS</Link>
-        </h2>
+        <nav className="big-boy">
+          {data.allSanityService.nodes.map((service: { slug: { current: string } }, index: number) => (
+            <div key={index}>
+              {index === 0 && (
+                <h2 key={index} className="pine uppercase">
+                  <Link
+                    to={`/${service.slug.current}`}
+                    activeClassName="active"
+                    partiallyActive={true}
+                  >
+                    {service.slug.current}
+                  </Link>
+                  &nbsp;&amp;&nbsp;
+                </h2>
+              )}
+              {index > 0 && (
+                <h2 className="pine uppercase" key={index}>
+                  <Link
+                    to={`/${service.slug.current}`}
+                    activeClassName="active"
+                  >
+                    {service.slug.current}
+                  </Link>
+                </h2>
+              )}
+            </div>
+          ))}
+        </nav>
         <hr />
       </div>
     </header>

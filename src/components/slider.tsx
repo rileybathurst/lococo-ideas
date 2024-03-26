@@ -22,21 +22,39 @@ const Slider = () => {
       sanityAbout {
         tagline
       }
+
+      sanityTexture(title: {eq: "wood"}) {
+        title
+        image {
+          asset {
+            gatsbyImageData
+          }
+        }
+      }
     }
   `)
 
   return (
     <>
-      <div className="slider">
+      <div className="slider slide-left">
         {data.allSanitySlider.edges.map(({ node }) => (
           <div className="slide" key={node.title}>
             <GatsbyImage image={node.image.asset.gatsbyImageData} alt={node.title} />
           </div>
         ))}
       </div>
-      <h3 className="text-center">{data.sanityAbout.tagline}</h3>
-      <div className="slider">
-        {data.allSanitySlider.edges.map(({ node }) => (
+
+      <div className='color-block'>
+        <GatsbyImage
+          image={data.sanityTexture?.image?.asset?.gatsbyImageData}
+          alt={data.sanityTexture.title}
+        />
+        <div className='pine-block'>{/* stay gold */}</div>
+        <h3 className="text-center">{data.sanityAbout.tagline}</h3>
+      </div>
+
+      <div className="slider slide-right">
+        {data.allSanitySlider.edges.reverse().map(({ node }) => (
           <div className="slide" key={node.title}>
             <GatsbyImage image={node.image.asset.gatsbyImageData} alt={node.title} />
           </div>

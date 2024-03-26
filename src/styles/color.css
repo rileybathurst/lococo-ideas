@@ -5,3 +5,46 @@
 .pine {
   color: var(--pine);
 }
+
+/*------------------------------------*/
+
+.color-block {
+  height: 4.75rem;
+  color: white;
+  display: grid;
+
+  > * {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .gatsby-image-wrapper {
+    mix-blend-mode: multiply;
+    height: 4.75rem;
+  }
+
+  .pine-block {
+    mix-blend-mode: multiply;
+    background-color: var(--pine);
+    box-shadow: 0 0 0 100vmax var(--pine);
+    clip-path: inset(0 -100vmax);
+    margin-block-start: 1.25rem;
+    height: 3.5rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    z-index: var(--canopy);
+    /* font-family: var(--font-cursive); */
+    font-size: var(--aconcagua);
+  }
+}
+
+.color-block:has(h1, h2, h3, h4, h5, h6, p) {
+  min-height: 3.5rem;
+}

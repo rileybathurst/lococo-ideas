@@ -14,6 +14,15 @@
 
   --font-sans: "Josefin Sans Variable", sans-serif;
   --font-cursive: "Architects Daughter", cursive;
+  --font-cursive: "Caveat Variable", cursive;
+
+  --everest: 3rem; /* 29,035ft Asia */
+  --aconcagua: 2.5rem; /* 22,840ft South America */
+  --denali: 2rem; /* 20,320ft North America */
+  --kilimanjaro: 1.5rem; /* 19,340ft Africa */
+  --elbrus: 1.25rem; /* 18,510ft Europe / Russia */
+  --vinson: 1rem; /* 16,050ft Antartica */
+  --kosciuszko: 0.75rem; /* 7,310ft Australia */
 
   --line-height: 1.25rem;
 
@@ -27,4 +36,21 @@
   --condor: 50rem;
   --pelican: 60rem;
   --albatross: 80rem;
+
+  /*------------------*/
+
+  --border-radius: 0.25rem;
+
+  /*------------------------------------*/
+
+  --timing: 0.25s;
+
+  /*------------------*/
+  /* Z INDEX LAYERS */
+  /*  https://en.wikipedia.org/wiki/Forest */
+  /*------------------*/
+
+  --floor: 0;
+  --canopy: 1;
+  --emergent: 2;
 }

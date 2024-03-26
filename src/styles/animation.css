@@ -1,0 +1,29 @@
+/*------------------------------------*/
+/* #ANIMATION */
+/*------------------------------------*/
+
+.slider.slide-left {
+  animation: 20s infinite slideLeft;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(-10rem);
+  }
+}
+
+.slider.slide-right {
+  animation: 20s infinite slideRight;
+}
+
+@keyframes slideRight {
+  from {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(10rem);
+  }
+}

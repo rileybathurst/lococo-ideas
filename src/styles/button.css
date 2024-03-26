@@ -1,0 +1,20 @@
+/*------------------------------------*/
+/* #BUTTON */
+/*------------------------------------*/
+
+button,
+.button {
+  display: inline-block;
+  padding: 0.5em 1em;
+  margin: 0;
+  border: 0;
+  border-radius: 0.25em;
+  background-color: var(--pine);
+  color: var(--color-white);
+  font-size: 1em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: var(--border-radius);
+}

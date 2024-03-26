@@ -12,6 +12,14 @@ body {
   text-align: center;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
 .notes {
   font-family: var(--font-cursive);
 }

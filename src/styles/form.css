@@ -1,0 +1,44 @@
+form {
+  display: flex;
+  flex-direction: column;
+  margin-block-end: var(--line-height);
+
+  input,
+  textarea,
+  input[type="checkbox"] {
+    margin-block-end: 0.5rem;
+    display: block;
+    width: calc(100% - 2rem);
+    max-width: var(--pelican);
+    border-radius: var(--border-radius);
+    padding-block: 0.5rem;
+    padding-inline: 0.5rem;
+    border: 1px solid var(--pine);
+  }
+
+  button {
+    margin-inline: 0.5rem;
+    width: calc(100% - 4rem);
+  }
+
+  textarea {
+    height: 6rem;
+  }
+
+  label {
+    width: calc(100% - 2rem);
+    margin-block-end: 1.25rem;
+    margin-inline: auto;
+  }
+
+  input:checked {
+    /* border-color: hsl(var(--honey), 100%, 12.5%) !important; */
+  }
+
+  .checkbox {
+    display: flex;
+    flex-direction: row-reverse;
+    /* double backwards */
+    justify-content: flex-end;
+  }
+}

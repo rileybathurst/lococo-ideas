@@ -20,6 +20,7 @@
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org riley-bathurst-design --project lococo-ideas ./public && sentry-cli sourcemaps upload --org riley-bathurst-design --project lococo-ideas ./public"
   },
   "dependencies": {
+    "@fontsource-variable/caveat": "^5.0.17",
     "@fontsource-variable/josefin-sans": "^5.0.20",
     "@fontsource/architects-daughter": "^5.0.8",
     "@mdx-js/react": "^3.0.0",
