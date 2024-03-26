@@ -6,6 +6,12 @@ body {
   font-family: sans-serif;
 }
 
+/*------------------------------------*/
+
 .text-center {
   text-align: center;
+}
+
+.notes {
+  font-family: var(--font-cursive);
 }

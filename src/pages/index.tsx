@@ -18,13 +18,11 @@ const IndexPage = () => {
       sanityAuthor(slug: {current: {eq: "dano"}}) {
         name
         title
+        _rawBio
         slug {
           current
         }
 
-        bio {
-          _rawChildren
-        }
         
         image {
           asset {
@@ -69,18 +67,18 @@ const IndexPage = () => {
   return (
     <>
       <Header />
-      <section className="pelican-fold">
+      <section className="pelican-fold three-lines">
 
-        <div>
+        <div className="column">
           {/* this is wrong use the portable text */}
-          <ReactMarkdown
-            children={data.sanityAuthor.bio?.[0]?._rawChildren?.[0].text}
-            remarkPlugins={[remarkGfm]}
+          <PortableText
+            value={data.sanityAuthor._rawBio}
           />
 
           <GatsbyImage
             image={data.sanityAuthor.signature.asset.gatsbyImageData}
             alt={data.sanityAuthor.name}
+            className="signature"
           />
           <Link
             to={data.sanityAuthor.slug.current}
@@ -102,29 +100,31 @@ const IndexPage = () => {
 
       <main>
 
-        <section className="pelican-fold">
+        <section className="pelican-fold three-lines">
           <div>
             <PortableText
               value={data.sanityAbout._rawDescription}
             />
           </div>
-          <div>
+          <div className="notes">
             <PortableText
               value={data.sanityAbout._rawNotes}
             />
           </div>
         </section>
 
-        {data.allSanityService.nodes.map((service: any) => (
-          <>
+        {data.allSanityService.nodes.map((service: any, i: number) => (
+          <div key={i}>
             <h3 className="text-center">{service.title}</h3>
             <div className="pelican-fold">
               <ul>
-                {service.skills.map((skill: any) => (
-                  <li>{skill}</li>
+                {service.skills.map((skill: any, i: number) => (
+                  <li key={i}>
+                    {skill}
+                  </li>
                 ))}
               </ul>
-              <div>
+              <div className="notes">
                 <PortableText
                   value={service._rawNotes}
                 />
@@ -144,19 +144,19 @@ const IndexPage = () => {
 
               {service.project?.title}
             </section >
-          </>
+          </div>
         ))}
 
         <div className="pelican">
           <hr />
           <h3>Testimonials</h3>
-          {data.allSanityTestimonial.nodes.map((testimonial: any) => (
-            <>
+          {data.allSanityTestimonial.nodes.map((testimonial: any, i: number) => (
+            <div key={i}>
               <h3>{testimonial.title}</h3>
               <PortableText
                 value={testimonial._rawDescription}
               />
-            </>
+            </div>
           ))}
         </div>
 

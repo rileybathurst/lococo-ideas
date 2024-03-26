@@ -22,7 +22,11 @@ const Header = () => {
       </div>
       <div className="condor">
         <hr />
-        <h2 className="pine text-center">ARCHITECTURE &amp; EXHIBITS</h2>
+        <h2 className="pine text-center">
+          <Link to="/architecture">ARCHITECTURE</Link>
+          &nbsp;&amp;&nbsp;
+          <Link to="/exhibits">EXHIBITS</Link>
+        </h2>
         <hr />
       </div>
     </header>
