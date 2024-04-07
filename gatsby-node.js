@@ -55,15 +55,9 @@ exports.createPages = ({ actions, graphql }) => {
   ])
 }
 
-// reverse
-
-console.log('🦊');
-
 // https://github.com/sanity-io/gatsby-source-sanity/issues/81#issuecomment-1303532560
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
-
-  console.log('🦄');
 
   const typeDefs = [
     "type SanityService implements Node { RelatedProjects: [RelatedProjects]  }",
@@ -83,28 +77,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             const projects = await context.nodeModel.findAll({
               type: `SanityProject`,
               query: {
-                // service: { _id: { in: `c98fb7ab-25b2-422d-85f9-08eea8738a2b` } },
-                service: { _id: { in: source._id } },
+                filter: { service: { _id: { eq: source._id } } },
               },
             })
 
-            const RelatedProjects = projects.entries.map((entry) => {
-              // console.log(entry);
-              console.log(entry.title);
+            const RelatedProjects = projects.entries.map((project) => {
               return {
-                slug: entry?.slug?.current ?? "hi",
+                slug: project?.slug?.current ?? "",
               };
             });
-
-            console.log('🥸');
-            // console.log(projects);
-            // console.log(context);
-            // console.log(context.nodeModel);
-
-            // console.log(source);
-            // console.log(source._id);
-            // console.log(projects);
-            // console.log(projects.entries);
 
             let entries = [];
             entries.push(...RelatedProjects);
@@ -116,12 +97,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       },
     }),
   ]
-
-  console.log('🦖');
-
   createTypes(typeDefs)
-
-
 }
 
 
