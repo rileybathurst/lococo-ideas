@@ -6,8 +6,6 @@
   max-width: 10rem;
 }
 
-
-
 .author-block {
   display: grid;
 
@@ -16,19 +14,13 @@
     grid-column: 1;
     aspect-ratio: 1;
   }
-  
+
   .pine-block {
-    margin: 0.1rem 0.1rem;
     background-color: var(--pine);
-    clip-path: polygon(0 0, 100% 100%, 0 100%);
-    border: 0.5rem solid white;
   }
 
   .gold-block {
-    margin: -0.1rem -0.1rem;
     background-color: gold;
-    clip-path: polygon(0 0, 100% 0, 100% 100%);
-    border: 0.5rem solid white;
   }
 
   .author {

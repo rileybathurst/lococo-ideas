@@ -23,13 +23,34 @@
     height: 4.75rem;
   }
 
+  .block {
+    clip-path: inset(0 -100vmax);
+    margin-block-start: 1.25rem;
+    height: 3.5rem;
+  }
+
+  .reset-block {
+    mix-blend-mode: hue;
+    background-color: white;
+    box-shadow: 0 0 0 100vmax white;
+  }
   .pine-block {
     mix-blend-mode: multiply;
     background-color: var(--pine);
     box-shadow: 0 0 0 100vmax var(--pine);
-    clip-path: inset(0 -100vmax);
-    margin-block-start: 1.25rem;
-    height: 3.5rem;
+  }
+
+  /* this doesnt work */
+  .snow-plant-block {
+    mix-blend-mode: multiply;
+    background-color: var(--snow-plant);
+    box-shadow: 0 0 0 100vmax var(--snow-plant);
+  }
+
+  .hibernal-block {
+    mix-blend-mode: multiply;
+    background-color: var(--hibernal);
+    box-shadow: 0 0 0 100vmax var(--hibernal);
   }
 
   h1,

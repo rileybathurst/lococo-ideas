@@ -25,7 +25,7 @@ const ProjectPage = ({ data }) => {
             image={data.sanityTexture?.image?.asset?.gatsbyImageData}
             alt={data.sanityTexture.title}
           />
-          <div className='pine-block'>{/* stay gold */}</div>
+          <div className='block pine-block'>{/* stay gold */}</div>
           <h1>{data.sanityProject.title}</h1>
         </div>
         <section className="pelican-fold">
@@ -40,8 +40,8 @@ const ProjectPage = ({ data }) => {
           image={data.sanityTexture?.image?.asset?.gatsbyImageData}
           alt={data.sanityTexture.title}
         />
-        <div className='pine-block'>{/* stay gold */}</div>
-        <p>{data.sanityProject.service.title} &gt; {data.sanityProject.title}</p>
+        <div className='block pine-block'>{/* stay gold */}</div>
+        <p className="pelican">{data.sanityProject.service.title} &gt; {data.sanityProject.title}</p>
       </div >
 
       <Footer />

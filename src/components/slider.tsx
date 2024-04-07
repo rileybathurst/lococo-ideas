@@ -49,7 +49,7 @@ const Slider = () => {
           image={data.sanityTexture?.image?.asset?.gatsbyImageData}
           alt={data.sanityTexture.title}
         />
-        <div className='pine-block'>{/* stay gold */}</div>
+        <div className='block pine-block'>{/* stay gold */}</div>
         <h3 className="text-center">{data.sanityAbout.tagline}</h3>
       </div>
 

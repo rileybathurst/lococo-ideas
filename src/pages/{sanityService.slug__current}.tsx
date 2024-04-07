@@ -12,7 +12,7 @@ const ServicePage = ({ data }: { data: { sanityService: { title: string } } }) =
 
         <div className="pelican">
           <h2>Projects</h2>
-          <ul>
+          {/* <ul>
             {data.sanityService.project.map((project: { title: string, slug: { current: string } }) => (
               <li key={project.title}>
                 <a href={`/${data.sanityService.slug.current}/${project.slug.current}`}>
@@ -20,7 +20,7 @@ const ServicePage = ({ data }: { data: { sanityService: { title: string } } }) =
                 </a>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </main>
       <Footer />
@@ -34,18 +34,6 @@ export const query = graphql`
       title
       slug {
         current
-      }
-
-      project {
-        title
-        slug {
-          current
-        }
-        image {
-          asset {
-            gatsbyImageData
-          }
-        }
       }
     }
   }

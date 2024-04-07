@@ -54,3 +54,23 @@ exports.createPages = ({ actions, graphql }) => {
     getProject
   ])
 }
+
+// reverse
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  const { createTypes } = actions
+
+  const typeDefs = [
+    // Create a "RelatedProjects" type on the root type of "SanityService"
+    "type SanityService implements Node { RelatedProjects: [RelatedProjects]  }",
+    // Define the "RelatedProjects" type that was applied to the "RelatedProjects" key in the line above this one.
+    `type RelatedProjects {
+      id: String!
+      name: String!
+      slug: String
+    }`,
+  ]
+
+  createTypes(typeDefs)
+}
+

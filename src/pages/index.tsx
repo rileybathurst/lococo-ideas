@@ -48,18 +48,6 @@ const IndexPage = () => {
           slug {
             current
           }
-
-          project {
-            title
-            slug {
-              current
-            }
-            image {
-                asset {
-                    gatsbyImageData
-                }
-            }
-          }
         }
       }
 
@@ -142,7 +130,7 @@ const IndexPage = () => {
                 image={data.sanityTexture?.image?.asset?.gatsbyImageData}
                 alt={data.sanityTexture.title}
               />
-              <div className='pine-block'>{/* stay gold */}</div>
+              <div className='block pine-block'>{/* stay gold */}</div>
               <h3 className="text-center">{service.title}</h3>
             </div>
             <div className="pelican-fold">
@@ -162,7 +150,7 @@ const IndexPage = () => {
 
             <hr />
 
-            <h2 className="pelican">Projects</h2>
+            {/* <h2 className="pelican">Projects</h2>
             <section className="pelican-fold">
               <div className="stack">
                 {service.project.map((project: any) => (
@@ -175,7 +163,7 @@ const IndexPage = () => {
                   </Link>
                 ))}
               </div>
-            </section >
+            </section > */}
           </div>
         ))}
 
@@ -184,8 +172,22 @@ const IndexPage = () => {
             image={data.sanityTexture?.image?.asset?.gatsbyImageData}
             alt={data.sanityTexture.title}
           />
-          <div className='pine-block'>{/* stay gold */}</div>
-          <h3>Testimonials</h3>
+          <div className='block reset-block'>{/* stay gold */}</div>
+          <div className='block hibernal-block'>{/* stay gold */}</div>
+          <h3 className="pelican">Testimonials</h3>
+        </div>
+
+        <hr />
+
+
+        <div className='color-block'>
+          <GatsbyImage
+            image={data.sanityTexture?.image?.asset?.gatsbyImageData}
+            alt={data.sanityTexture.title}
+          />
+          <div className='block reset-block'>{/* stay gold */}</div>
+          <div className='block snow-plant-block'>{/* stay gold */}</div>
+          <h3 className="pelican">Testimonials</h3>
         </div>
         <div className="pelican">
           {data.allSanityTestimonial.nodes.map((testimonial: any, i: number) => (
