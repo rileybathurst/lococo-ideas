@@ -78,17 +78,33 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         RelatedProjects: {
           type: ["RelatedProjects"],
 
-          resolve: async () => {
+          resolve: async (source, args, context, info) => {
 
-            hey = [1, 2, 3]
+            const projects = await context.nodeModel.findAll({
+              type: `SanityProject`,
+              query: {
+                // service: { _id: { in: `c98fb7ab-25b2-422d-85f9-08eea8738a2b` } },
+                service: { _id: { in: source._id } },
+              },
+            })
 
-            const RelatedProjects = hey.map((entry) => {
+            const RelatedProjects = projects.entries.map((entry) => {
+              // console.log(entry);
+              console.log(entry.title);
               return {
-                slug: "test23",
+                slug: entry?.slug?.current ?? "hi",
               };
             });
 
             console.log('🥸');
+            // console.log(projects);
+            // console.log(context);
+            // console.log(context.nodeModel);
+
+            // console.log(source);
+            // console.log(source._id);
+            // console.log(projects);
+            // console.log(projects.entries);
 
             let entries = [];
             entries.push(...RelatedProjects);
@@ -104,5 +120,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
   console.log('🦖');
 
   createTypes(typeDefs)
+
+
 }
+
 
