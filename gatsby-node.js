@@ -78,29 +78,13 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         RelatedProjects: {
           type: ["RelatedProjects"],
 
-          resolve: async (source, args, context, info) => {
+          resolve: async () => {
 
-            const projects = await context.nodeModel.findAll({
-              type: "sanityProject",
-              query: {
-                filter: {
-                  service: {
-                    slug: {
-                      current: {
-                        eq: 'exhibits'
-                      },
-                    },
-                  },
-                },
-              },
-            });
+            hey = [1, 2, 3]
 
-            console.log('🦖');
-            console.log(projects);
-
-            const RelatedProjects = projects.entries.map((entry) => {
+            const RelatedProjects = hey.map((entry) => {
               return {
-                slug: entry?.meta?.slug?.current ?? "test23",
+                slug: "test23",
               };
             });
 
