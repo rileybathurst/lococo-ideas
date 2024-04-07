@@ -2,6 +2,8 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
+// process.env.VERBOSE_NODE_MANIFEST = "true";
+
 import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
