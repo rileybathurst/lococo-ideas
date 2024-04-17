@@ -19,8 +19,8 @@ function Hero({ image, steps }) {
 
 function Materials({ material }) {
 
-  console.log(material)
-  if (material) {
+  // console.log(material)
+  if (material.length > 0) {
     return (
       <>
         <h3 className="pelican">Materials</h3>
@@ -87,7 +87,11 @@ const ProjectPage = ({ data }) => {
       </main>
 
 
-      <p className="pelican">{data.sanityProject.service.title} &gt; {data.sanityProject.title}</p>
+      <p className="pelican">
+        <Link to={`/${data.sanityProject.service.slug.current}`}>{data.sanityProject.service.title}</Link>
+        &nbsp;&gt;&nbsp;
+        {data.sanityProject.title}
+      </p>
 
       <Footer />
     </>
@@ -110,6 +114,9 @@ export const query = graphql`
 
       service {
         title
+        slug {
+          current
+        }
       }
 
       steps {
