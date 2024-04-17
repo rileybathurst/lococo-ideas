@@ -95,6 +95,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       title: String
       excerpt: String
       image: String
+      featured: Boolean
     }`,
 
     // image: [ Image ]
@@ -137,6 +138,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
                 id: project._id,
                 title: project.title,
                 excerpt: project.excerpt,
+                featured: project.featured,
 
                 image: project?.image?.asset?._ref ?? "", // * gives a ref to allSanityImageAsset
 

@@ -43,6 +43,7 @@ const IndexPage = () => {
       allSanityService {
         nodes {
           title
+          order
           skills
           _rawNotes
           slug {
@@ -65,6 +66,7 @@ const IndexPage = () => {
             title
             slug
             excerpt
+            featured
           }
         }
       }
@@ -82,6 +84,11 @@ const IndexPage = () => {
 
     }
   `)
+
+  // this is kinda a pain as it would have to be done for each service through a map
+  // let rp = service.RelatedProjects.filter((service: any) => service.featured).slice(0, 2);
+  // console.log(rp);
+  // ? or we push it up through a function
 
   return (
     <>
@@ -140,60 +147,66 @@ const IndexPage = () => {
           </div>
         </section>
 
-        {data.allSanityService.nodes.reverse().map((service: any,) => (
-          <div key={service.id}>
-            <div className="pelican">
-              <GatsbyImage
-                image={service.image.asset.gatsbyImageData}
-                alt={service.image.altText}
-              />
-            </div>
-            {/* // TODO: color per service, does this come from gatsby-node? */}
-            <h2 className="pelican heading-back mint-back">{service.title}</h2>
-            <div className="pelican-fold">
-              <ul>
-                {service.skills.map((skill: any, i: number) => (
-                  <li key={i}>
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-              <div className="notes">
-                <PortableText
-                  value={service._rawNotes}
+        {data.allSanityService.nodes
+          .sort((a: any, b: any) => a.order - b.order)
+          .map((service: any,) => (
+            <div key={service.id}>
+              <div className="pelican">
+                <GatsbyImage
+                  image={service.image.asset.gatsbyImageData}
+                  alt={service.image.altText}
                 />
               </div>
-            </div>
-
-            <h2 className="pelican">Projects</h2>
-
-            <section className="projects">
-              <GatsbyImage
-                image={service.texture.asset.gatsbyImageData}
-                alt="texture"
-              />
-
-
-              <section className="pelican-fold">
-                <div className="deck">
-                  {service.RelatedProjects.slice(0, 2).map((project: any) => (
-                    <Link
-                      key={project.title}
-                      to={`/${service.slug.current}/${project.slug}`}
-                      className="card"
-                    >
-                      <h3>{project.title}</h3>
-                      <p>{project.excerpt}</p>
-                    </Link>
+              {/* // TODO: color per service, does this come from gatsby-node? */}
+              <h2 className="pelican heading-back mint-back">{service.title}</h2>
+              <div className="pelican-fold">
+                <ul>
+                  {service.skills.map((skill: any, i: number) => (
+                    <li key={i}>
+                      {skill}
+                    </li>
                   ))}
+                </ul>
+                <div className="notes">
+                  <PortableText
+                    value={service._rawNotes}
+                  />
                 </div>
-              </section >
+              </div>
 
-            </section>
+              <h2 className="pelican">Projects</h2>
+
+              <section className="projects">
+                <GatsbyImage
+                  image={service.texture.asset.gatsbyImageData}
+                  alt="texture"
+                />
 
 
-          </div>
-        ))}
+                <div className="deck">
+                  {service.RelatedProjects
+                    .filter((project: any) => project.featured) // Filter featured projects
+
+                    // .slice(0, 2)
+
+                    .map((project: any) => (
+                      // console.log(project),
+                      // console.log(project.featured),
+                      <Link
+                        key={project.title}
+                        to={`/${service.slug.current}/${project.slug}`}
+                        className="card"
+                      >
+                        <h3>{project.title}</h3>
+                        <p>{project.excerpt}</p>
+                      </Link>
+                    ))}
+                </div>
+              </section>
+
+
+            </div >
+          ))}
 
         <h2 className="pelican">Testimonials</h2>
 
