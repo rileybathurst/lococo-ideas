@@ -23,3 +23,7 @@ body {
 .notes {
   font-family: var(--font-cursive);
 }
+
+.font-cursive {
+  font-family: var(--font-cursive);
+}

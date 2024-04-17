@@ -15,16 +15,7 @@
     aspect-ratio: 1;
   }
 
-  .pine-block {
-    background-color: var(--pine);
-  }
-
-  .gold-block {
-    background-color: gold;
-  }
-
   .author {
-    border-radius: 50%;
     margin: var(--line-height);
     border: 0.5rem solid white;
   }

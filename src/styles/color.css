@@ -69,3 +69,19 @@
 .color-block:has(h1, h2, h3, h4, h5, h6, p) {
   min-height: 3.5rem;
 }
+
+.heading-back {
+  padding: 0.25rem;
+}
+
+.mint-back {
+  background-color: var(--mint);
+}
+
+.ice-back {
+  background-color: var(--ice);
+}
+
+.mix-multiply {
+  mix-blend-mode: multiply;
+}

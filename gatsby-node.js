@@ -1,4 +1,5 @@
 const path = require(`path`)
+// import { generateImageData, getLowResolutionImageURL } from "gatsby-plugin-image"
 
 const makeRequest = (graphql, request) => new Promise((resolve, reject) => {
   // Query for nodes to use in creating pages.
@@ -60,10 +61,43 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
 
   const typeDefs = [
-    "type SanityService implements Node { RelatedProjects: [RelatedProjects]  }",
+
+    `type Image {
+      gatsbyImageData(
+        aspectRatio: Float
+        avifOptions: AVIFOptions
+        backgroundColor: String
+        blurredOptions: BlurredOptions
+        breakpoints: [Int]
+        formats: [ImageFormat]
+        height: Int
+        jpgOptions: JPGOptions
+        layout: ImageLayout = CONSTRAINED
+        outputPixelDensities: [Float]
+        placeholder: ImagePlaceholder
+        pngOptions: PNGOptions
+        quality: Int
+        sizes: String
+        tracedSVGOptions: Potrace
+        transformOptions: TransformOptions
+        webpOptions: WebPOptions
+        width: Int
+      ): JSON!
+    }`,
+
+    `type SanityService implements Node { 
+      RelatedProjects: [RelatedProjects]  
+    },`,
+
     `type RelatedProjects {
       slug: String
+      id: ID
+      title: String
+      excerpt: String
+      image: String
     }`,
+
+    // image: [ Image ]
 
 
     schema.buildObjectType({
@@ -82,9 +116,34 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             })
 
             const RelatedProjects = projects.entries.map((project) => {
+
+              /* const image = context.nodeModel.find({
+                type: `SanityImageAsset`,
+                query: {
+                  filter: { image: { _id: { eq: project?.image?.asset?._ref } } },
+                },
+              }) */
+
+              // console.log("image");
+              // console.log(image);
+              // I believe this is possible but its going to be a thing
+
+              // console.log(project);
+              // console.log(project?.image?.asset?._ref);
+
               return {
                 slug: project?.slug?.current ?? "",
+
+                id: project._id,
+                title: project.title,
+                excerpt: project.excerpt,
+
+                image: project?.image?.asset?._ref ?? "", // * gives a ref to allSanityImageAsset
+
               };
+
+
+
             });
 
             let entries = [];

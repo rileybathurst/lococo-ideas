@@ -7,6 +7,10 @@
   /* COLOR */
   /*------------------*/
   --pine: hsl(145, 100%, 25%);
+
+  --mint: oklch(80% 0.12 155);
+  --ice: oklch(75% 0.08 210);
+
   --snow-plant: hsl(5, 95%, 35%);
   --hibernal: hsl(205, 100%, 45%);
 
@@ -15,7 +19,6 @@
   /*------------------------------------*/
 
   --font-sans: "Josefin Sans Variable", sans-serif;
-  --font-cursive: "Architects Daughter", cursive;
   --font-cursive: "Caveat Variable", cursive;
 
   --everest: 3rem; /* 29,035ft Asia */

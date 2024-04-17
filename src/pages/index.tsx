@@ -6,7 +6,6 @@ import { PortableText } from '@portabletext/react'
 
 import Header from "../components/header"
 import Footer from "../components/footer"
-import Slider from "../components/slider";
 
 const IndexPage = () => {
 
@@ -25,6 +24,7 @@ const IndexPage = () => {
         image {
           asset {
             gatsbyImageData
+            altText
           }
         }
         
@@ -48,6 +48,24 @@ const IndexPage = () => {
           slug {
             current
           }
+
+          image {
+            asset {
+              gatsbyImageData
+            }
+          }
+          
+          texture {
+            asset {
+              gatsbyImageData
+            }
+          }
+
+          RelatedProjects {
+            title
+            slug
+            excerpt
+          }
         }
       }
 
@@ -58,13 +76,8 @@ const IndexPage = () => {
         }
       }
 
-      sanityTexture(title: {eq: "wood"}) {
-        title
-        image {
-          asset {
-            gatsbyImageData
-          }
-        }
+      sanityAbout {
+        tagline
       }
 
     }
@@ -75,16 +88,28 @@ const IndexPage = () => {
       <Header />
       <section className="pelican-fold three-lines">
 
+        <div className="author-block">
+          <GatsbyImage
+            image={data.sanityAuthor.image.asset.gatsbyImageData}
+            alt={data.sanityAuthor.name}
+            className="author"
+          />
+        </div>
+
         <div className="column">
+          <h1 className="heading-back mint-back">About Me</h1>
           <PortableText
             value={data.sanityAuthor._rawBio}
           />
 
-          <GatsbyImage
-            image={data.sanityAuthor.signature.asset.gatsbyImageData}
-            alt={data.sanityAuthor.name}
-            className="signature"
-          />
+          <div className="mix-multiply ice-back">
+            <GatsbyImage
+              image={data.sanityAuthor.signature.asset.gatsbyImageData}
+              alt={data.sanityAuthor.name}
+              className="signature"
+            />
+          </div>
+
           <Link
             to={data.sanityAuthor.slug.current}
             className="sr-only"
@@ -94,19 +119,11 @@ const IndexPage = () => {
           {data.sanityAuthor.title}
         </div>
 
-        <div className="author-block">
-          <div className="pine-block">{/* stay gold */}</div>
-          <div className="gold-block">{/* stay gold */}</div>
-          <GatsbyImage
-            image={data.sanityAuthor.image.asset.gatsbyImageData}
-            alt={data.sanityAuthor.name}
-            className="author"
-          />
-        </div>
-
       </section>
 
-      <Slider />
+      {/* <Slider /> */}
+      <h3 className="font-cursive text-center">{data.sanityAbout.tagline}</h3>
+
 
       <main>
 
@@ -123,16 +140,16 @@ const IndexPage = () => {
           </div>
         </section>
 
-        {data.allSanityService.nodes.reverse().map((service: any, i: number) => (
-          <div key={i}>
-            <div className='color-block'>
+        {data.allSanityService.nodes.reverse().map((service: any,) => (
+          <div key={service.id}>
+            <div className="pelican">
               <GatsbyImage
-                image={data.sanityTexture?.image?.asset?.gatsbyImageData}
-                alt={data.sanityTexture.title}
+                image={service.image.asset.gatsbyImageData}
+                alt={service.image.altText}
               />
-              <div className='block pine-block'>{/* stay gold */}</div>
-              <h3 className="text-center">{service.title}</h3>
             </div>
+            {/* // TODO: color per service, does this come from gatsby-node? */}
+            <h2 className="pelican heading-back mint-back">{service.title}</h2>
             <div className="pelican-fold">
               <ul>
                 {service.skills.map((skill: any, i: number) => (
@@ -148,51 +165,41 @@ const IndexPage = () => {
               </div>
             </div>
 
-            <hr />
+            <h2 className="pelican">Projects</h2>
 
-            {/* <h2 className="pelican">Projects</h2>
-            <section className="pelican-fold">
-              <div className="stack">
-                {service.project.map((project: any) => (
-                  <Link to={`/${service.slug.current}/${project.slug.current}`} key={project.title} className="poster">
-                    <GatsbyImage
-                      image={project.image?.asset?.gatsbyImageData}
-                      alt={project.title}
-                    />
-                    <h3>{project.title}</h3>
-                  </Link>
-                ))}
-              </div>
-            </section > */}
+            <section className="projects">
+              <GatsbyImage
+                image={service.texture.asset.gatsbyImageData}
+                alt="texture"
+              />
+
+
+              <section className="pelican-fold">
+                <div className="deck">
+                  {service.RelatedProjects.slice(0, 2).map((project: any) => (
+                    <Link
+                      key={project.title}
+                      to={`/${service.slug.current}/${project.slug}`}
+                      className="card"
+                    >
+                      <h3>{project.title}</h3>
+                      <p>{project.excerpt}</p>
+                    </Link>
+                  ))}
+                </div>
+              </section >
+
+            </section>
+
+
           </div>
         ))}
 
-        <div className='color-block'>
-          <GatsbyImage
-            image={data.sanityTexture?.image?.asset?.gatsbyImageData}
-            alt={data.sanityTexture.title}
-          />
-          <div className='block reset-block'>{/* stay gold */}</div>
-          <div className='block hibernal-block'>{/* stay gold */}</div>
-          <h3 className="pelican">Testimonials</h3>
-        </div>
+        <h2 className="pelican">Testimonials</h2>
 
-        <hr />
-
-
-        <div className='color-block'>
-          <GatsbyImage
-            image={data.sanityTexture?.image?.asset?.gatsbyImageData}
-            alt={data.sanityTexture.title}
-          />
-          <div className='block reset-block'>{/* stay gold */}</div>
-          <div className='block snow-plant-block'>{/* stay gold */}</div>
-          <h3 className="pelican">Testimonials</h3>
-        </div>
         <div className="pelican">
           {data.allSanityTestimonial.nodes.map((testimonial: any, i: number) => (
             <div key={i}>
-              <h3>{testimonial.title}</h3>
               <PortableText
                 value={testimonial._rawDescription}
               />
