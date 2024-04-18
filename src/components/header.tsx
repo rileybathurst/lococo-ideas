@@ -50,6 +50,7 @@ const Header = () => {
                   <Link
                     to={`/${service.slug.current}`}
                     activeClassName="active"
+                    partiallyActive={true}
                   >
                     {service.slug.current}
                   </Link>

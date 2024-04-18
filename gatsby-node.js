@@ -1,3 +1,5 @@
+// https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#defining-child-relations
+
 const path = require(`path`)
 // import { generateImageData, getLowResolutionImageURL } from "gatsby-plugin-image"
 
@@ -14,7 +16,7 @@ const makeRequest = (graphql, request) => new Promise((resolve, reject) => {
   )
 }); // makeRequests
 
-// Create blog pages dynamically
+// Create project pages with the service in the url
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
 
@@ -56,50 +58,37 @@ exports.createPages = ({ actions, graphql }) => {
   ])
 }
 
+// the problem with here is how do we get down to the related project
+
 // https://github.com/sanity-io/gatsby-source-sanity/issues/81#issuecomment-1303532560
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
 
   const typeDefs = [
 
-    `type Image {
-      gatsbyImageData(
-        aspectRatio: Float
-        avifOptions: AVIFOptions
-        backgroundColor: String
-        blurredOptions: BlurredOptions
-        breakpoints: [Int]
-        formats: [ImageFormat]
-        height: Int
-        jpgOptions: JPGOptions
-        layout: ImageLayout = CONSTRAINED
-        outputPixelDensities: [Float]
-        placeholder: ImagePlaceholder
-        pngOptions: PNGOptions
-        quality: Int
-        sizes: String
-        tracedSVGOptions: Potrace
-        transformOptions: TransformOptions
-        webpOptions: WebPOptions
-        width: Int
-      ): JSON!
-    }`,
-
     `type SanityService implements Node { 
+      RelatedProjects: [RelatedProjects]  
+    },`,
+
+    `type SanityMaterial implements Node { 
       RelatedProjects: [RelatedProjects]  
     },`,
 
     `type RelatedProjects {
       slug: String
-      id: ID
+      id: String
       title: String
       excerpt: String
-      image: String
       featured: Boolean
+      image: String
+      relatedImages: [RelatedImages]
     }`,
 
-    // image: [ Image ]
-
+    `type RelatedImages {
+      id: String
+      title: String
+      image: String
+    }`,
 
     schema.buildObjectType({
       name: "SanityService",
@@ -116,49 +105,140 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
               },
             })
 
+            // ! cant do this as it cant use the source
+            /* const images = await context.nodeModel.findAll({
+              type: `SanityImageAsset`,
+              query: {
+                filter: { _id: { eq: source._id } } },
+              },
+            }) */
+
             const RelatedProjects = projects.entries.map((project) => {
-
-              /* const image = context.nodeModel.find({
-                type: `SanityImageAsset`,
-                query: {
-                  filter: { image: { _id: { eq: project?.image?.asset?._ref } } },
-                },
-              }) */
-
-              // console.log("image");
-              // console.log(image);
-              // I believe this is possible but its going to be a thing
-
-              // console.log(project);
-              // console.log(project?.image?.asset?._ref);
-
               return {
                 slug: project?.slug?.current ?? "",
-
                 id: project._id,
                 title: project.title,
                 excerpt: project.excerpt,
                 featured: project.featured,
-
                 image: project?.image?.asset?._ref ?? "", // * gives a ref to allSanityImageAsset
-
               };
-
-
-
             });
+
+            // * totally different idea im now searching for all projects instead of the images
+            // im still only looping through the services with the context
+            // i need to now loop through the projects
 
             let entries = [];
             entries.push(...RelatedProjects);
             return entries;
           },
-
-
         },
       },
     }),
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // console.log('🦊'),
+
+    /*     schema.buildObjectType({
+          name: "SanityProject",
+          fields: {
+            RelatedImages: {
+              type: ["RelatedImages"],
+    
+              resolve: async (source, args, context, info) => {
+    
+                console.log("source");
+                console.log(source);
+    
+                const images = await context.nodeModel.findAll({
+                  type: `SanityProject`,
+                  query: {
+                    filter: { image: { asset: { _id: { eq: source._id } } } }
+                  },
+                })
+    
+                // console.log(images); // gives an iterable which doesnt help
+    
+                const RelatedImages = images.entries.map((image) => {
+    
+                  console.log("image");
+                  console.log(image);
+    
+                  return {
+                    id: "🦄",
+                  };
+                });
+    
+    
+                let entries = [];
+                entries.push(...RelatedImages);
+                return entries;
+              },
+            },
+          },
+        }), */
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // try work on another loop not to do with the images
+    // prove i can loop twice differently but correctly
+
+    schema.buildObjectType({
+      name: "SanityMaterial",
+      fields: {
+        RP2: {
+          type: ["RelatedProjects"],
+
+          resolve: async (source, args, context, info) => {
+
+            // console.log("source");
+            // console.log(source);
+
+            // "title": "Bamboo"
+            // _id: '8532a2c7-2a64-486c-9726-e927772dfb1f',
+
+            // "title": "Go Macro"
+            // "_id": "5a329c72-3341-4a71-8bbf-4d653ea9d30b",
+
+            // console.log(context.nodeModel)
+            // console.log(source._id);
+
+            const p2 = await context.nodeModel.findAll({
+              type: `SanityProject`,
+              query: {
+                filter: { material: { elemMatch: { _id: { eq: source._id } } } },
+              },
+            })
+
+            console.log("projects");
+            console.log(p2);
+
+            const RP2 = p2.entries.map((project) => {
+              return {
+                slug: project?.slug?.current ?? "",
+                id: project._id,
+                title: project.title,
+                excerpt: project.excerpt,
+                featured: project.featured,
+                image: project?.image?.asset?._ref ?? "", // * gives a ref to allSanityImageAsset
+              };
+            });
+
+            // * totally different idea im now searching for all projects instead of the images
+            // im still only looping through the services with the context
+            // i need to now loop through the projects
+
+            let entries = [];
+            entries.push(...RP2);
+            return entries;
+          },
+        },
+      },
+    }),
+
+
   ]
   createTypes(typeDefs)
 }
 
-
+// ! cant start again a second time it overwrites the first one

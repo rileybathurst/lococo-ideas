@@ -55,6 +55,7 @@ const Footer = () => {
             to={`/${service.slug.current}`}
             className='capitalize'
             activeClassName="active"
+            partiallyActive={true}
           >
             {service.slug.current}
           </Link>
