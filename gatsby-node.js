@@ -186,34 +186,19 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     schema.buildObjectType({
       name: "SanityMaterial",
       fields: {
-        RP2: {
+        RelatedProjects: {
           type: ["RelatedProjects"],
 
           resolve: async (source, args, context, info) => {
 
-            // console.log("source");
-            // console.log(source);
-
-            // "title": "Bamboo"
-            // _id: '8532a2c7-2a64-486c-9726-e927772dfb1f',
-
-            // "title": "Go Macro"
-            // "_id": "5a329c72-3341-4a71-8bbf-4d653ea9d30b",
-
-            // console.log(context.nodeModel)
-            // console.log(source._id);
-
-            const p2 = await context.nodeModel.findAll({
+            const projects = await context.nodeModel.findAll({
               type: `SanityProject`,
               query: {
                 filter: { material: { elemMatch: { _id: { eq: source._id } } } },
               },
             })
 
-            console.log("projects");
-            console.log(p2);
-
-            const RP2 = p2.entries.map((project) => {
+            const RelatedProjects = projects.entries.map((project) => {
               return {
                 slug: project?.slug?.current ?? "",
                 id: project._id,
@@ -224,12 +209,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
               };
             });
 
-            // * totally different idea im now searching for all projects instead of the images
-            // im still only looping through the services with the context
-            // i need to now loop through the projects
-
             let entries = [];
-            entries.push(...RP2);
+            entries.push(...RelatedProjects);
             return entries;
           },
         },
