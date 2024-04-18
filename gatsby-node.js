@@ -89,6 +89,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       id: String
       title: String
       image: String
+      gatsbyImageData: JSON
+      filename: String
     }`,
 
     schema.buildObjectType({
@@ -106,49 +108,16 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
               },
             })
 
-            // ! cant do this as it cant use the source as thats the service which doesnt know about the ref
-            /* const images = await context.nodeModel.findAll({
-              type: `SanityImageAsset`,
-              query: {
-                filter: { _id: { eq: source._id } } },
-              },
-            }) */
-
-            const RelatedProjects = projects.entries.map((project) => {
-
-              // ? Im 99% sure you cant run in here
-
-
-              /*               resolve: async (source, args, context, info) => {
-                              const images = await context.nodeModel.findAll({
-                                type: `SanityImageAsset`,
-                                query: {
-                                  filter: { _id: { eq: project?.image?.asset?._ref } },
-                                },
-                              });
-                              console.log(images);
-                              return images;
-                            }; */
-
-              const RelatedProjects = projects.entries.map(async (project) => {
-                const images = await context.nodeModel.findAll({
-                  type: `SanityImageAsset`,
-                  query: {
-                    filter: { _id: { eq: project?.image?.asset?._ref } },
-                  },
-                });
-                console.log(images);
-                return {
-                  slug: project?.slug?.current ?? "",
-                  id: project._id,
-                  title: project.title,
-                  excerpt: project.excerpt,
-                  featured: project.featured,
-                  image: project?.image?.asset?._ref ?? "",
-                  relatedImages: images,
-                  test: "test",
-                };
+            const RelatedProjects = projects.entries.map(async (project) => {
+              const images = await context.nodeModel.findAll({
+                type: `SanityImageAsset`,
+                query: {
+                  filter: { _id: { eq: project?.image?.asset?._ref } },
+                },
               });
+
+              // console.log(images.entries);
+              // GatsbyIterable { source: [Function (anonymous)] }
 
               return {
                 slug: project?.slug?.current ?? "",
@@ -156,7 +125,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
                 title: project.title,
                 excerpt: project.excerpt,
                 featured: project.featured,
-                image: project?.image?.asset?._ref ?? "", // * gives a ref to allSanityImageAsset
+                image: project?.image?.asset?._ref ?? "",
+                relatedImages: images.entries,
               };
             });
 
@@ -216,50 +186,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // wrapping again here the context is not updated
-
     // add the test string in a second wrap
-
-    schema.buildObjectType({
-      name: "SanityService",
-      fields: {
-
-        // changing this updates the field but you cant add it in without overwritting
-        RP: {
-
-          // ? Cannot query field "title" on type "R2"?
-          type: ["RelatedProjects"],
-
-          // even tho args and info are not used they are required
-          resolve: async (source, args, context, info) => {
-
-            const p2 = await context.nodeModel.findAll({
-              type: `SanityProject`,
-              query: {
-                filter: { service: { _id: { eq: source._id } } },
-              },
-            })
-
-            console.log('🦖');
-
-            const RP2 = p2.entries.map((project) => {
-
-              // console.log(project);
-
-              // this updated but crushed the first wrap
-              // try with new variables
-              return {
-                test: "test",
-              };
-            });
-
-            let e2 = [];
-            e2.push(...RP2);
-            return e2;
-          },
-        },
-      },
-    }),
-
 
   ]
   createTypes(typeDefs)
