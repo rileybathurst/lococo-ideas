@@ -67,6 +67,10 @@ const IndexPage = () => {
             slug
             excerpt
             featured
+
+            relatedImages {
+              url
+            }
           }
         }
       }
@@ -176,6 +180,8 @@ const IndexPage = () => {
 
               <h2 className="pelican">Projects</h2>
 
+              {/* // TODO: this can have a height from a ref */}
+              {/* <Projects texture={service.texture} relatedProjects={service.RelatedProjects} /> */}
               <section className="projects">
                 <GatsbyImage
                   image={service.texture.asset.gatsbyImageData}
@@ -185,18 +191,18 @@ const IndexPage = () => {
 
                 <div className="deck">
                   {service.RelatedProjects
-                    .filter((project: any) => project.featured) // Filter featured projects
-
-                    // .slice(0, 2)
-
+                    .filter((project: any) => project.featured)
                     .map((project: any) => (
-                      // console.log(project),
-                      // console.log(project.featured),
                       <Link
                         key={project.title}
                         to={`/${service.slug.current}/${project.slug}`}
                         className="card"
                       >
+                        {/* <GatsbyImage
+                          image={project.relatedImages[0].url.asset.gatsbyImageData}
+                          alt={project.title}
+                        /> */}
+                        <img src={project.relatedImages[0].url} />
                         <h3>{project.title}</h3>
                         <p>{project.excerpt}</p>
                       </Link>

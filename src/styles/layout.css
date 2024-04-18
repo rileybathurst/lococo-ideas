@@ -107,7 +107,6 @@ header {
 
 .projects {
   display: grid;
-  height: 40rem;
 
   > * {
     grid-row: 1;
@@ -135,5 +134,9 @@ header {
     background-color: white;
     width: 100%;
     text-align: center;
+
+    img {
+      width: 100%;
+    }
   }
 }
