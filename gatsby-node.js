@@ -82,6 +82,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       featured: Boolean
       image: String
       relatedImages: [RelatedImages]
+      test: String
     }`,
 
     `type RelatedImages {
@@ -105,7 +106,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
               },
             })
 
-            // ! cant do this as it cant use the source
+            // ! cant do this as it cant use the source as thats the service which doesnt know about the ref
             /* const images = await context.nodeModel.findAll({
               type: `SanityImageAsset`,
               query: {
@@ -114,6 +115,41 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             }) */
 
             const RelatedProjects = projects.entries.map((project) => {
+
+              // ? Im 99% sure you cant run in here
+
+
+              /*               resolve: async (source, args, context, info) => {
+                              const images = await context.nodeModel.findAll({
+                                type: `SanityImageAsset`,
+                                query: {
+                                  filter: { _id: { eq: project?.image?.asset?._ref } },
+                                },
+                              });
+                              console.log(images);
+                              return images;
+                            }; */
+
+              const RelatedProjects = projects.entries.map(async (project) => {
+                const images = await context.nodeModel.findAll({
+                  type: `SanityImageAsset`,
+                  query: {
+                    filter: { _id: { eq: project?.image?.asset?._ref } },
+                  },
+                });
+                console.log(images);
+                return {
+                  slug: project?.slug?.current ?? "",
+                  id: project._id,
+                  title: project.title,
+                  excerpt: project.excerpt,
+                  featured: project.featured,
+                  image: project?.image?.asset?._ref ?? "",
+                  relatedImages: images,
+                  test: "test",
+                };
+              });
+
               return {
                 slug: project?.slug?.current ?? "",
                 id: project._id,
@@ -139,45 +175,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // console.log('🦊'),
-
-    /*     schema.buildObjectType({
-          name: "SanityProject",
-          fields: {
-            RelatedImages: {
-              type: ["RelatedImages"],
-    
-              resolve: async (source, args, context, info) => {
-    
-                console.log("source");
-                console.log(source);
-    
-                const images = await context.nodeModel.findAll({
-                  type: `SanityProject`,
-                  query: {
-                    filter: { image: { asset: { _id: { eq: source._id } } } }
-                  },
-                })
-    
-                // console.log(images); // gives an iterable which doesnt help
-    
-                const RelatedImages = images.entries.map((image) => {
-    
-                  console.log("image");
-                  console.log(image);
-    
-                  return {
-                    id: "🦄",
-                  };
-                });
-    
-    
-                let entries = [];
-                entries.push(...RelatedImages);
-                return entries;
-              },
-            },
-          },
-        }), */
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // try work on another loop not to do with the images
@@ -212,6 +209,52 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             let entries = [];
             entries.push(...RelatedProjects);
             return entries;
+          },
+        },
+      },
+    }),
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // wrapping again here the context is not updated
+
+    // add the test string in a second wrap
+
+    schema.buildObjectType({
+      name: "SanityService",
+      fields: {
+
+        // changing this updates the field but you cant add it in without overwritting
+        RP: {
+
+          // ? Cannot query field "title" on type "R2"?
+          type: ["RelatedProjects"],
+
+          // even tho args and info are not used they are required
+          resolve: async (source, args, context, info) => {
+
+            const p2 = await context.nodeModel.findAll({
+              type: `SanityProject`,
+              query: {
+                filter: { service: { _id: { eq: source._id } } },
+              },
+            })
+
+            console.log('🦖');
+
+            const RP2 = p2.entries.map((project) => {
+
+              // console.log(project);
+
+              // this updated but crushed the first wrap
+              // try with new variables
+              return {
+                test: "test",
+              };
+            });
+
+            let e2 = [];
+            e2.push(...RP2);
+            return e2;
           },
         },
       },
