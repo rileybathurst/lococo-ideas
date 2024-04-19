@@ -101,7 +101,12 @@ const ProjectPage = ({ data }) => {
 
 
       <p className="breadcrumbs pelican">
-        <Link to={`/${data.sanityProject.service.slug.current}`}>{data.sanityProject.service.title}</Link>
+        <Link
+          to={`/${data.sanityProject.service.slug.current}`}
+          className={data.sanityProject.service.color}
+        >
+          {data.sanityProject.service.title}
+        </Link>
         &nbsp;&gt;&nbsp;
         {data.sanityProject.title}
       </p>
