@@ -8,13 +8,20 @@
   padding-inline: var(--line-height);
 }
 
+.stork {
+  width: var(--stork);
+  margin-inline: auto;
+  padding-inline: var(--line-height);
+}
+
 .condor {
   width: var(--condor);
   margin-inline: auto;
   padding-inline: var(--line-height);
 }
 
-.pelican {
+.pelican,
+.breadcrumbs {
   width: var(--pelican);
   margin-inline: auto;
   padding-inline: var(--line-height);
@@ -74,8 +81,6 @@ header {
 
   .poster {
     flex: 1 1 var(--swan);
-
-    border-radius: var(--border-radius);
     display: grid;
 
     > * {
@@ -87,7 +92,7 @@ header {
       z-index: var(--floor);
       margin-block-end: var(--line-height);
       border: 1px solid grey;
-      background-color: var(--pine);
+      background-color: var(--snow-plant);
     }
 
     h3 {
@@ -127,16 +132,39 @@ header {
   padding-block: 3rem;
   max-width: var(--pelican);
   margin-inline: auto;
+  margin-block-end: 3rem;
   padding-inline: 1rem;
 
   .card {
+    display: grid;
+    gap: 1rem;
+    align-content: flex-end;
     padding: 1rem;
     background-color: white;
     width: 100%;
     text-align: center;
+    border-radius: 0.5rem;
+    box-shadow: var(--mesosphere);
 
     img {
       width: 100%;
+      border-radius: 0.25rem;
+      box-shadow: var(--mesosphere);
+      transition: var(--timing) ease;
     }
   }
+
+  .card:hover {
+    box-shadow: var(--stratosphere);
+
+    img {
+      scale: 1.08;
+    }
+  }
+}
+
+/*------------------------------------*/
+
+.breadcrumbs {
+  margin-block-end: 3rem;
 }

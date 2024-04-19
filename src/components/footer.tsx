@@ -16,6 +16,7 @@ const Footer = () => {
           slug {
             current
           }
+          color
         }
       }
 
@@ -49,17 +50,22 @@ const Footer = () => {
           </Link>
         </div>
         <p>&copy; {new Date().getFullYear()}</p>
-        {data.allSanityService.nodes.map((service: { slug: { current: string } }) => (
-          <Link
-            key={service.slug.current}
-            to={`/${service.slug.current}`}
-            className='capitalize'
-            activeClassName="active"
-            partiallyActive={true}
-          >
-            {service.slug.current}
-          </Link>
-        ))}
+        <ul className='kilimanjaro'>
+          {data.allSanityService.nodes.map((service: { slug: { current: string } }) => (
+            <li
+              key={service.slug.current}
+            >
+              <Link
+                to={`/${service.slug.current}`}
+                className={`capitalize ${service.color}`}
+                activeClassName="active"
+                partiallyActive={true}
+              >
+                {service.slug.current}
+              </Link>
+            </li>
+          ))}
+        </ul>
         <h3><Link to="/contact">Contact</Link></h3>
       </nav>
       <form

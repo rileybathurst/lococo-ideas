@@ -12,6 +12,7 @@ function Hero({ image, steps }) {
       <GatsbyImage
         image={image.asset.gatsbyImageData}
         alt={image.alt}
+        className="poster"
       />
     )
   }
@@ -19,12 +20,19 @@ function Hero({ image, steps }) {
 
 function Materials({ material }) {
 
+  // TODO: this is weird as its not on a texture
+
   // console.log(material)
   if (material.length > 0) {
     return (
       <>
-        <h3 className="pelican">Materials</h3>
-        <section className="deck">
+        <h3 className="pelican">
+          <Link to="/material">
+            Materials
+          </Link>
+        </h3>
+        {/* // TODO: color */}
+        <section className="deck mint-back">
           {material.map((item) => (
             <Link to={`/material/${item.slug.current}`} key={item.id} className="card">
               <GatsbyImage
@@ -58,11 +66,16 @@ const ProjectPage = ({ data }) => {
           />
         </div>
 
+        {/* // TODO: make this a component */}
+        <div className="pelican color-block">
+          <div className={`heading-back ${data.sanityProject.service.color}-back`}>{/* stay gold */}</div>
+          <h1>{data.sanityProject.title}</h1>
+        </div>
 
-        <h1 className="pelican">{data.sanityProject.title}</h1>
         <section className="pelican-fold">
           <div>
-            {data.sanityProject.description}
+            {/* TODO: remove before release */}
+            {data.sanityProject.description ?? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc ultricies ultricies."}
           </div>
         </section>
 
@@ -76,8 +89,8 @@ const ProjectPage = ({ data }) => {
             />
             <div>
               <h2>{step.name}</h2>
-              <p>{step.description}</p>
-              <p className="font-cursive">{step.notes}</p>
+              <p>{step.description ?? "Lorem ipsum dolor sit amen"}</p>
+              <p className="notes">{step.notes ?? "Lorem ipsum dolor sit amen"}</p>
             </div>
             <hr />
           </section>
@@ -87,7 +100,7 @@ const ProjectPage = ({ data }) => {
       </main>
 
 
-      <p className="pelican">
+      <p className="breadcrumbs pelican">
         <Link to={`/${data.sanityProject.service.slug.current}`}>{data.sanityProject.service.title}</Link>
         &nbsp;&gt;&nbsp;
         {data.sanityProject.title}
@@ -114,6 +127,7 @@ export const query = graphql`
 
       service {
         title
+        color
         slug {
           current
         }

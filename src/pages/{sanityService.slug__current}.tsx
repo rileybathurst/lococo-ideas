@@ -4,15 +4,16 @@ import { GatsbyImage } from "gatsby-plugin-image"
 import Header from "../components/header"
 import Footer from "../components/footer"
 import { PortableText } from '@portabletext/react'
+import Card from "../components/card"
 
 const ServicePage = ({ data }: { data: { sanityService: { title: string } } }) => {
   return (
     <>
       <Header />
       <main>
-        <h1 className="pelican pine-block">{data.sanityService.title}</h1>
+        <h1 className={`stork ${data.sanityService.color}`}>{data.sanityService.title}</h1>
 
-        <p className="pelican">{data.sanityService.description}</p>
+        <p className="stork">{data.sanityService.description}</p>
 
         <hr className="pelican" />
 
@@ -33,8 +34,7 @@ const ServicePage = ({ data }: { data: { sanityService: { title: string } } }) =
 
       </main>
 
-
-      <h2 className="pelican">Projects</h2>
+      <h2 className="pelican">{data.sanityService.title} Projects</h2>
 
       <section className="projects">
         <GatsbyImage
@@ -44,11 +44,11 @@ const ServicePage = ({ data }: { data: { sanityService: { title: string } } }) =
 
         <div className="deck">
           {data.sanityService.RelatedProjects.map((project: { title: string, slug: { current: string } }) => (
-            <div className="card" key={project.title}>
-              <a href={`/${data.sanityService.slug.current}/${project.slug}`}>
-                {project.title}
-              </a>
-            </div>
+            <Card
+              content={project}
+              breadcrumb={data.sanityService.slug.current}
+              color={data.sanityService.color}
+            />
           ))}
         </div>
       </section>
@@ -68,10 +68,17 @@ export const query = graphql`
       description
       skills
       _rawNotes
+      color
 
       RelatedProjects {
         title
         slug
+        excerpt
+        featured
+
+        relatedImages {
+          url
+        }
       }
 
       texture {

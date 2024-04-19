@@ -6,6 +6,51 @@ body {
   font-family: sans-serif;
 }
 
+p {
+  line-height: 1.5;
+}
+
+/*------------------------------------*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.5;
+}
+
+h1,
+.everest {
+  font-size: var(--everest);
+}
+
+h2,
+.aconcagua {
+  font-size: var(--aconcagua);
+}
+
+h3,
+.denali {
+  font-size: var(--denali);
+}
+
+h4,
+.kilimanjaro {
+  font-size: var(--kilimanjaro);
+}
+
+h5,
+.elbrus {
+  font-size: var(--elbrus);
+}
+
+h6,
+.vinson {
+  font-size: var(--vinson);
+}
+
 /*------------------------------------*/
 
 .text-center {
@@ -26,4 +71,21 @@ body {
 
 .font-cursive {
   font-family: var(--font-cursive);
+}
+
+.font-weight-400 {
+  font-weight: 400;
+}
+
+/*------------------------------------*/
+
+.tagline {
+  font-family: var(--font-cursive);
+  text-align: center;
+  font-size: var(--everest);
+  font-weight: 400;
+}
+
+.notes {
+  font-size: var(--kilimanjaro);
 }

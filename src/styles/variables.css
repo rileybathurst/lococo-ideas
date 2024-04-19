@@ -6,13 +6,11 @@
   /*------------------*/
   /* COLOR */
   /*------------------*/
-  --pine: hsl(145, 100%, 25%);
 
   --mint: oklch(80% 0.12 155);
   --ice: oklch(75% 0.08 210);
 
   --snow-plant: hsl(5, 95%, 35%);
-  --hibernal: hsl(205, 100%, 45%);
 
   /*------------------------------------*/
   /* #TYPOGRAPHY */
@@ -58,4 +56,17 @@
   --floor: 0;
   --canopy: 1;
   --emergent: 2;
+
+  /*------------------*/
+  /* SHADOWS */
+  /*------------------*/
+  /*  based on the layers of the atomposhere */
+  /*  https://en.wikipedia.org/wiki/Atmosphere_of_Earth */
+
+  --mesosphere: 0 3px 6px hsla(35, 100%, 0%, 0.12),
+    0 2px 4px hsla(35, 100%, 50%, 0.1);
+  --stratosphere: 0 14px 24px hsla(35, 87%, 0%, 0.16),
+    0 4px 12px hsla(35, 87%, 50%, 0.12);
+  --troposphere: 0 5px 12px hsla(35, 50%, 0%, 0.4) /* Ambient light shadow */,
+    0 18px 32px hsla(35, 50%, 50%, 0.16) /* Direct light shadow */;
 }

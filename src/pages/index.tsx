@@ -1,4 +1,4 @@
-import * as React from "react"
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 
@@ -6,6 +6,50 @@ import { PortableText } from '@portabletext/react'
 
 import Header from "../components/header"
 import Footer from "../components/footer"
+
+function Projects({ texture, relatedProjects, breadcrumb, color }) {
+
+  const [deckHeight, setDeckHeight] = useState(0);
+  const ref = useRef();
+
+  useEffect(() => {
+    setDeckHeight(ref?.current?.clientHeight);
+  });
+
+  return (
+    <section className="projects">
+      <GatsbyImage
+        image={texture.asset.gatsbyImageData}
+        alt="texture"
+        style={{ height: deckHeight }}
+      />
+
+      <div
+        className="deck"
+        ref={ref}
+      >
+        {relatedProjects
+          .filter((project: any) => project.featured)
+          .map((project: any) => (
+            <Link
+              key={project.title}
+              to={`/${breadcrumb}/${project.slug}`}
+              className={`card ${color}`}
+            >
+              {/* <GatsbyImage
+                          image={project.relatedImages[0].url.asset.gatsbyImageData}
+                          alt={project.title}
+                        /> */}
+              <img src={project.relatedImages[0].url} />
+              <h3 className={color}>{project.title}</h3>
+              <p>{project.excerpt ?? "Lorem ipsum dolor sit amen"}</p>
+            </Link>
+          ))}
+      </div>
+    </section>
+  )
+}
+
 
 const IndexPage = () => {
 
@@ -49,6 +93,7 @@ const IndexPage = () => {
           slug {
             current
           }
+          color
 
           image {
             asset {
@@ -133,7 +178,7 @@ const IndexPage = () => {
       </section>
 
       {/* <Slider /> */}
-      <h3 className="font-cursive text-center">{data.sanityAbout.tagline}</h3>
+      <h3 className="tagline">{data.sanityAbout.tagline}</h3>
 
 
       <main>
@@ -155,14 +200,23 @@ const IndexPage = () => {
           .sort((a: any, b: any) => a.order - b.order)
           .map((service: any,) => (
             <div key={service.id}>
-              <div className="pelican">
-                <GatsbyImage
-                  image={service.image.asset.gatsbyImageData}
-                  alt={service.image.altText}
-                />
-              </div>
+              <Link to={`/${service.slug.current}`}>
+                <div className="pelican">
+                  <GatsbyImage
+                    image={service.image.asset.gatsbyImageData}
+                    alt={service.image.altText}
+                  />
+                </div>
+              </Link >
               {/* // TODO: color per service, does this come from gatsby-node? */}
-              <h2 className="pelican heading-back mint-back">{service.title}</h2>
+
+              <h2 className={`pelican heading-back ${service.color}-back`}>
+                <Link to={`/${service.slug.current}`}
+                  className={service.color}
+                >
+                  {service.title}
+                </Link>
+              </h2>
               <div className="pelican-fold">
                 <ul>
                   {service.skills.map((skill: any, i: number) => (
@@ -178,40 +232,17 @@ const IndexPage = () => {
                 </div>
               </div>
 
-              <h2 className="pelican">Projects</h2>
+              <h2 className="pelican">{service.title} Projects</h2>
 
-              {/* // TODO: this can have a height from a ref */}
-              {/* <Projects texture={service.texture} relatedProjects={service.RelatedProjects} /> */}
-              <section className="projects">
-                <GatsbyImage
-                  image={service.texture.asset.gatsbyImageData}
-                  alt="texture"
-                />
-
-
-                <div className="deck">
-                  {service.RelatedProjects
-                    .filter((project: any) => project.featured)
-                    .map((project: any) => (
-                      <Link
-                        key={project.title}
-                        to={`/${service.slug.current}/${project.slug}`}
-                        className="card"
-                      >
-                        {/* <GatsbyImage
-                          image={project.relatedImages[0].url.asset.gatsbyImageData}
-                          alt={project.title}
-                        /> */}
-                        <img src={project.relatedImages[0].url} />
-                        <h3>{project.title}</h3>
-                        <p>{project.excerpt}</p>
-                      </Link>
-                    ))}
-                </div>
-              </section>
+              <Projects
+                texture={service.texture}
+                relatedProjects={service.RelatedProjects}
+                breadcrumb={service.slug.current}
+                color={service.color}
+              />
 
 
-            </div >
+            </div>
           ))}
 
         <h2 className="pelican">Testimonials</h2>

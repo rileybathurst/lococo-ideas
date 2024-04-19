@@ -1,6 +1,11 @@
 /*------------------------------------*/
 /* #MEDIA */
 /*------------------------------------*/
+.poster {
+  border-radius: var(--border-radius);
+  border: 1px solid white;
+  box-shadow: var(--mesosphere);
+}
 
 .signature {
   max-width: 10rem;

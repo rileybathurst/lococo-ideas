@@ -3,14 +3,32 @@
 /*------------------------------------*/
 
 .pine {
-  color: var(--pine);
+  color: var(--snow-plant);
+}
+
+.mint {
+  color: var(--mint);
+}
+
+.mint-back {
+  background-color: var(--mint);
+  background-color: oklch(95% 0.04 155);
+}
+
+.ice {
+  color: var(--ice);
+}
+
+.ice-back {
+  background-color: var(--ice);
+  background-color: oklch(95% 0.04 210);
 }
 
 /*------------------------------------*/
 
 .color-block {
-  height: 4.75rem;
-  color: white;
+  /* height: 4.75rem; */
+  /* color: white; */
   display: grid;
 
   > * {
@@ -36,8 +54,8 @@
   }
   .pine-block {
     mix-blend-mode: multiply;
-    background-color: var(--pine);
-    box-shadow: 0 0 0 100vmax var(--pine);
+    background-color: var(--snow-plant);
+    box-shadow: 0 0 0 100vmax var(--snow-plant);
   }
 
   /* this doesnt work */
@@ -72,14 +90,6 @@
 
 .heading-back {
   padding: 0.25rem;
-}
-
-.mint-back {
-  background-color: var(--mint);
-}
-
-.ice-back {
-  background-color: var(--ice);
 }
 
 .mix-multiply {

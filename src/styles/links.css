@@ -3,7 +3,7 @@
 /*------------------------------------*/
 
 a {
-  color: var(--pine);
+  color: var(--snow-plant);
   text-decoration: none;
 }
 
@@ -20,4 +20,11 @@ a.active {
 
 .logo-link:hover {
   opacity: 0.5;
+}
+
+/*------------------------------------*/
+
+/* subtle link */
+.card p {
+  color: black;
 }

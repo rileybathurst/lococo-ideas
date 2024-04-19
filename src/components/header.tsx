@@ -15,6 +15,7 @@ const Header = () => {
           slug {
             current
           }
+          color
         }
       }
     }
@@ -33,10 +34,12 @@ const Header = () => {
         <nav className="big-boy">
           {data.allSanityService.nodes.map((service: { slug: { current: string } }, index: number) => (
             <div key={index}>
+              {/* // ? would this be way cleaner with a css content? */}
               {index === 0 && (
-                <h2 key={index} className="pine uppercase">
+                <h2 key={index} className="uppercase">
                   <Link
                     to={`/${service.slug.current}`}
+                    className={service.color}
                     activeClassName="active"
                     partiallyActive={true}
                   >
@@ -46,9 +49,10 @@ const Header = () => {
                 </h2>
               )}
               {index > 0 && (
-                <h2 className="pine uppercase" key={index}>
+                <h2 className="uppercase" key={index}>
                   <Link
                     to={`/${service.slug.current}`}
+                    className={service.color}
                     activeClassName="active"
                     partiallyActive={true}
                   >
